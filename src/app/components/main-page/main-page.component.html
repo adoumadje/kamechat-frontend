@@ -11,9 +11,16 @@
 </div>
 
 <div class="flex px-[200px] mt-[50px]">
-    <div class="border-r border-gray-300 w-[280px] h-[calc(100vh-150px)] py-2">
-        <div>
-            client
+    <div class="border-r border-gray-300 w-[280px] h-[calc(100vh-150px)] py-2 overflow-y-auto px-2">
+        <div *ngFor="let x of [].constructor(10); let i = index" 
+        class="flex mb-5 border-b border-gray-300 p-2 cursor-pointer hover:bg-gray-100">
+            <div class="w-10 h-10 overflow-hidden rounded-full">
+                <img src="https://cdnlogo.com/logos/d/23/dragon-ball-z.svg" alt="profile" class="w-full h-full object-cover">
+            </div>
+            <div class="ml-3">
+                <h2 class="font-semibold">User Name</h2>
+                <p class="text-gray-500 text-xs">online</p>
+            </div>
         </div>
     </div>
 
