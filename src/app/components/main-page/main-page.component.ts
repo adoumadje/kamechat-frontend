@@ -17,4 +17,5 @@ export class MainPageComponent {
         this.date = this.now.toLocaleDateString();
         this.time = String(this.now.getHours()).padStart(2, '0') + ':' + String(this.now.getMinutes()).padStart(2, '0');
     }
+
 }
