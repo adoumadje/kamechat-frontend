@@ -9,5 +9,12 @@ import { Component } from '@angular/core';
   styleUrl: './main-page.component.css'
 })
 export class MainPageComponent {
+    now = new Date();
+    date: String;
+    time: String;
 
+    constructor() {
+        this.date = this.now.toLocaleDateString();
+        this.time = String(this.now.getHours()).padStart(2, '0') + ':' + String(this.now.getMinutes()).padStart(2, '0');
+    }
 }
