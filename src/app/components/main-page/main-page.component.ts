@@ -1,6 +1,8 @@
 import { NgFor, NgIf } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ModalComponent } from "../modal/modal.component";
+import { Route, Router } from '@angular/router';
+import { AuthGoogleService } from '../../services/auth-google.service';
 
 @Component({
   selector: 'app-main-page',
@@ -16,7 +18,9 @@ export class MainPageComponent {
 
     isModalOpened = false;
 
-    constructor() {
+    private authService = inject(AuthGoogleService);
+
+    constructor(private router: Router) {
         this.date = this.now.toLocaleDateString();
         this.time = String(this.now.getHours()).padStart(2, '0') + ':' + String(this.now.getMinutes()).padStart(2, '0');
     }
@@ -31,6 +35,8 @@ export class MainPageComponent {
 
     onConfirmBtnClicked(): void {
       this.isModalOpened = false;
+      this.authService.logout();
+      this.router.navigate(['/login']);
     }
 
     onCancelBtnClicked(): void {

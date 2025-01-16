@@ -13,7 +13,9 @@ export class AuthGoogleService {
 
   profile = signal<any>(null);
 
-  constructor() { }
+  constructor() {
+    this.initConfiguration();
+  }
 
   initConfiguration() {
     this.oAuthService.configure(authConfig);

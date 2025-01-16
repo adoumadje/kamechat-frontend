@@ -1,8 +1,5 @@
 import { Component, inject } from '@angular/core';
 import { AuthGoogleService } from '../../services/auth-google.service';
-import { MatButtonModule, MatIconButton } from '@angular/material/button';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-login',
