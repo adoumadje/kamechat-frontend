@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { MainPageComponent } from "./components/main-page/main-page.component";
+import { WebsocketService } from './services/websocket.service';
 
 @Component({
   selector: 'app-root',
@@ -11,4 +12,10 @@ import { MainPageComponent } from "./components/main-page/main-page.component";
 })
 export class AppComponent {
   title = 'kamechat-frontend';
+
+  private webSocketService = inject(WebsocketService);
+
+  constructor() {
+    this.webSocketService.connect();
+  }
 }

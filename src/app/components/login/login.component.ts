@@ -14,10 +14,6 @@ export class LoginComponent {
 
   constructor() { }
 
-  login(): void {
-    console.log('login');
-  }
-
   signInWithGoogle() {
     this.authService.login();
   }

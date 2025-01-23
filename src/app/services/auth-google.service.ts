@@ -1,5 +1,4 @@
 import { inject, Injectable, signal } from '@angular/core';
-import { Router } from '@angular/router';
 import { OAuthService } from 'angular-oauth2-oidc';
 import { authConfig } from '../configuration/auth-config';
 
@@ -9,9 +8,7 @@ import { authConfig } from '../configuration/auth-config';
 export class AuthGoogleService {
   private oAuthService = inject(OAuthService);
 
-  private router = inject(Router);
-
-  profile = signal<any>(null);
+  profile = signal<any>(null)
 
   constructor() {
     this.initConfiguration();
@@ -25,6 +22,7 @@ export class AuthGoogleService {
 
       if (this.oAuthService.hasValidIdToken()) {
         this.profile.set(this.oAuthService.getIdentityClaims());
+        sessionStorage.setItem('my_token', this.oAuthService.getIdToken());
       }
 
     });
