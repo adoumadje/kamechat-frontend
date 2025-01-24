@@ -8,6 +8,7 @@ import { UserService } from '../../services/user.service';
 import { ChatService } from '../../services/chat.service';
 import { WebsocketService } from '../../services/websocket.service';
 
+
 @Component({
   selector: 'app-main-page',
   standalone: true,
@@ -58,8 +59,12 @@ export class MainPageComponent implements OnInit {
       }, 1000);
     }
 
+    isString(val:any) {
+      return typeof val === 'string';
+    }
+
     formatTimestamp(timestamp: number[]) {
-      let stamp = new Date(timestamp[0], timestamp[1], timestamp[2], timestamp[3], timestamp[4], timestamp[5]);
+      let stamp = new Date(timestamp[0], timestamp[1] - 1, timestamp[2], timestamp[3], timestamp[4], timestamp[5]);
       let date = stamp.toLocaleDateString();
       let time = String(stamp.getHours()).padStart(2, '0') + ':' + String(stamp.getMinutes()).padStart(2, '0');
       return date + ' - ' + time;
@@ -148,6 +153,18 @@ export class MainPageComponent implements OnInit {
       return `${year}-${month}-${day}T${hours}:${minutes}:${seconds}.${milliseconds}000000`;
     }
 
+    formatForLocal(dateStr:string) {
+      let date = dateStr.split('T')[0];
+      let time = dateStr.split('T')[1].split('.')[0];
+      let year = date.split('-')[0];
+      let month = date.split('-')[1];
+      let day = date.split('-')[2];
+      let hours = time.split(':')[0];
+      let minutes = time.split(':')[1];
+      let seconds = time.split(':')[2];
+      return this.formatTimestamp([Number(year), Number(month), Number(day), Number(hours), Number(minutes), Number(seconds)]);
+    }
+
     resetForm() {
       this.chatForm.reset({
         message: ''
@@ -156,16 +173,24 @@ export class MainPageComponent implements OnInit {
 
     onSendMessage() {
       let textMsg = this.chatForm.value.message
+      this.resetForm();
       let msg = {
         sender: this.user,
         receiver: this.selectedUser,
         originalMessage: textMsg,
         chatId: this.chatId,
-        timestamp: this.formatDateToMatchJava(new Date()),
+        timestamp: this.formatDateToMatchJava(new Date())
       }
       this.chatMessages.push(msg);
-      this.sendPrivateMessage(msg);
-      this.resetForm();
+      setTimeout(() => {
+        if(this.chatMessages.length > 1
+          && this.chatMessages[this.chatMessages.length - 2].sender.id === this.user.id
+          && this.chatMessages[this.chatMessages.length - 2].originalMessage === textMsg) {
+          this.chatMessages.pop();
+        } else {
+          this.sendPrivateMessage(msg);
+        }
+      }, 3000);
     }
 
     get message() {

@@ -37,7 +37,7 @@
                 <ng-container *ngIf="chat.sender.id === selectedUser.id; then thenBlock; else elseBlock"></ng-container>
                 <ng-template #thenBlock>
                     <div class="mb-8">
-                        <h6 class="text-xs text-gray-500 mb-2">{{ formatTimestamp(chat.timestamp) }}</h6>
+                        <h6 class="text-xs text-gray-500 mb-2">{{ isString(chat.timestamp) ? formatForLocal(chat.timestamp) : formatTimestamp(chat.timestamp) }}</h6>
                         <div>
                             <div class="flex">
                                 <div class="w-10 h-10 overflow-hidden rounded-full">
@@ -57,7 +57,7 @@
     
                 <ng-template #elseBlock>
                     <div class="mb-8">
-                        <h6 class="text-xs text-gray-500 mb-2 text-right">{{ formatTimestamp(chat.timestamp) }}</h6>
+                        <h6 class="text-xs text-gray-500 mb-2 text-right">{{ isString(chat.timestamp) ? formatForLocal(chat.timestamp) : formatTimestamp(chat.timestamp) }}</h6>
                         <div>
                             <div class="flex justify-end">
                                 <div class="bg-blue-100 p-2 rounded-md mr-2 max-w-[40%]">
